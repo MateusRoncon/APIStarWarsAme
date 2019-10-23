@@ -1,8 +1,7 @@
 package com.amedigital.starwars.starwars.controller;
 
 import com.amedigital.starwars.starwars.dao.PlanetDAO;
-import com.amedigital.starwars.starwars.dto.PlanetRequest;
-import com.amedigital.starwars.starwars.dto.PlanetResponse;
+
 import com.amedigital.starwars.starwars.model.Planet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -20,10 +20,10 @@ public class Planet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
+    @NotBlank
     private String name;
 
-
+    @NotBlank
     private String weather;
 
     @NotBlank
@@ -32,6 +32,10 @@ public class Planet {
 
     private Integer qtAparitions;
 
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

@@ -4,12 +4,14 @@ import com.amedigital.starwars.starwars.dao.PlanetDAO;
 import com.amedigital.starwars.starwars.dto.PlanetRequest;
 import com.amedigital.starwars.starwars.dto.PlanetResponse;
 import com.amedigital.starwars.starwars.model.Planet;
+import com.amedigital.starwars.starwars.repository.PlanetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/planets")
@@ -18,6 +20,9 @@ public class PlanetsController {
 
     @Autowired
     PlanetDAO planetDAO;
+
+    @Autowired
+    private PlanetRepository planetRepository;
 
 
     @PostMapping("/")
@@ -33,48 +38,42 @@ public class PlanetsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Planet> getPlanetById(@PathVariable(value="id") Long planetId){
-
-        Planet planet = planetDAO.findOne(planetId);
-
-        if(planet == null){
-            return ResponseEntity.notFound().build();
+    Optional<Planet> findById(@PathVariable(value="id") Long planetid)
+        {
+            return planetRepository.findById(planetid);
         }
 
-        return ResponseEntity.ok().body(planet);
-
+    @GetMapping("/find/{name}")
+    Optional<Planet> findByName(@PathVariable(value="name") String planetName)
+    {
+        return planetRepository.findByName(planetName);
     }
+
 
 
     @PutMapping("/{id}")
     public ResponseEntity<Planet> updatePlanet(@PathVariable(value="id") Long planetId, @Valid @RequestBody Planet planetDetails){
 
-        Planet planet = planetDAO.findOne(planetId);
+        Optional<Planet> planetOptional = planetRepository.findById(planetId);
 
-        if(planet == null){
+        if(!planetOptional.isPresent())
             return ResponseEntity.notFound().build();
-        }
-        planet.setName(planetDetails.getName());
-        planet.setGround(planetDetails.getGround());
-        planet.setWeather(planetDetails.getWeather());
-        planet.setQtAparitions(planetDetails.getQtAparitions());
 
-        Planet updatePlanet = planetDAO.save(planet);
+        planetDetails.setId(planetId);
 
-        return ResponseEntity.ok().body(updatePlanet);
+        planetRepository.save(planetDetails);
+
+        return ResponseEntity.ok().build();
 
     }
+
+
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Planet> apagarPlaneta(@PathVariable(value="id") Long planetId){
 
-        Planet planet = planetDAO.findOne(planetId);
-
-        if(planet == null){
-            return ResponseEntity.notFound().build();
-        }
-        planetDAO.delete(planet);
+        planetRepository.deleteById(planetId);
 
         return ResponseEntity.ok().build();
     }

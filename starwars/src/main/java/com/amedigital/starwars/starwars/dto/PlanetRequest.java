@@ -9,18 +9,30 @@ import javax.validation.constraints.NotNull;
 
 public class PlanetRequest {
 
-
+    @JsonProperty("name")
+    @NotNull(message = "{name.not.blank}")
     private String name;
 
+    @NotNull(message = "{weather.not.blank}")
     private String weather;
 
-    private String ground;
+    @NotNull(message = "{distance.not.blank}")
+    @Min(value =  200 , message = "{distance.not.valid}")
+    private Integer distance;
 
+    private String ground;
     private Integer qtAparitions;
 
     public String getName() {
 
         return name;
+    }
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 
     public void setName(String name) {

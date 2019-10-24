@@ -2,11 +2,13 @@ package com.amedigital.starwars.starwars.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="Planets")
@@ -20,15 +22,11 @@ public class Planet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String weather;
 
-    @NotBlank
     private String ground;
-
 
     private Integer qtAparitions;
 

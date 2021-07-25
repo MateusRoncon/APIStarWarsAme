@@ -1,10 +1,15 @@
-package com.webflux.api.webflux.model;
+package com.webflux.api.model;
 
+import com.webflux.api.model.request.PlanetRequest;
+import com.webflux.api.model.response.PlanetResponse;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @Document
@@ -31,8 +36,8 @@ public class Planet {
     public Planet() {
     }
 
-    public Planet(String uuid, String name, String climate, String terrain, Integer films) {
-        this.uuid = uuid;
+    public Planet(String name, String climate, String terrain, Integer films) {
+        this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.climate = climate;
         this.terrain = terrain;
@@ -101,16 +106,31 @@ public class Planet {
 
     @Override
     public String toString() {
-
-        return "Planet{"+
-                "uuid='" + uuid + '\'' +
-                ", name='" + name + '\'' +
-                ", climate='" + climate + '\'' +
-                ", terrain='" + terrain + '\'' +
-                ", films='" + films +
-                '}';
-
+        final StringBuilder sb = new StringBuilder("Planet{");
+        sb.append("uuid='").append(uuid).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", climate='").append(climate).append('\'');
+        sb.append(", terrain='").append(terrain).append('\'');
+        sb.append(", films=").append(films);
+        sb.append('}');
+        return sb.toString();
     }
 
+    public Planet updateData(PlanetRequest planet) {
+        this.name = Optional.ofNullable(planet.getName()).orElse(name);
+        this.climate = Optional.ofNullable(planet.getClimate()).orElse(climate);
+        this.terrain = Optional.ofNullable(planet.getTerrain()).orElse(terrain);
+        this.films = Optional.ofNullable(planet.getFilms()).orElse(films);
+        return this;
+    }
 
+    public static PlanetResponse toResponse(Planet planet){
+        PlanetResponse response = new PlanetResponse();
+        response.setUuid(planet.getUuid());
+        response.setName(planet.getName());
+        response.setClimate(planet.getClimate());
+        response.setTerrain(planet.getTerrain());
+        response.setFilms(planet.getFilms());
+        return response;
+    }
 }

@@ -1,8 +1,8 @@
-package com.webflux.api.webflux.controller.request;
+package com.webflux.api.model.request;
 
-import com.webflux.api.webflux.model.Planet;
+import com.webflux.api.model.Planet;
 
-public class PlanetResponse {
+public class PlanetRequest {
 
     private String name;
 
@@ -12,15 +12,14 @@ public class PlanetResponse {
 
     private Integer films;
 
-
-    public PlanetResponse(Planet planet) {
-        this.name = planet.getName();
-        this.climate = planet.getClimate();
-        this.terrain = planet.getTerrain();
-        this.films = planet.getFilms();
+    public PlanetRequest() {
     }
 
-    public PlanetResponse() {
+    public PlanetRequest(String name, String climate, String terrain, Integer films) {
+        this.name = name;
+        this.climate = climate;
+        this.terrain = terrain;
+        this.films = films;
     }
 
     public String getName() {
@@ -55,11 +54,12 @@ public class PlanetResponse {
         this.films = films;
     }
 
-    public PlanetResponse toResponse(Planet planet){
-        this.name = planet.getName();
-        this.climate = planet.getClimate();
-        this.terrain = planet.getTerrain();
-        this.films = planet.getFilms();
-        return this;
+    public Planet toModel(){
+        Planet planet = new Planet();
+        planet.setName(this.getName());
+        planet.setFilms(this.getFilms());
+        planet.setTerrain(this.getTerrain());
+        planet.setClimate(this.getClimate());
+        return planet;
     }
 }

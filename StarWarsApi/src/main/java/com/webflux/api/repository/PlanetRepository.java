@@ -1,8 +1,7 @@
-package com.webflux.api.webflux.model.repository;
+package com.webflux.api.repository;
 
-import com.webflux.api.webflux.model.Planet;
+import com.webflux.api.model.Planet;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import reactor.core.publisher.Mono;
 
 
 public interface PlanetRepository extends ReactiveMongoRepository<Planet, String> {

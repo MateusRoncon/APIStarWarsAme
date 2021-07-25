@@ -8,7 +8,7 @@ API CRUD do StarWars, em WebFlux
 ## Installation
 
 - Pre-requesitos para iniciar o projeto
-    - [**Java 8**](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
+    - [**Java 11**](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
     - [**Gradle**](https://docs.gradle.org/current/userguide/userguide.html) | _or use the wrapper ./gradlew_
     - [**Spring Boot 2**](https://spring.io/projects/spring-boot)
     
@@ -19,4 +19,9 @@ Execute o comando abaixo na raiz do projeto para instalar as dependências:
 
 ````
 ./gradlew clean install
+
 ````
+### Executando os testes
+Execute o comando abaixo para rodar os testes:
+
+./gradlew clean build
